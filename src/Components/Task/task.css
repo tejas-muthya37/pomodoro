@@ -1,0 +1,14 @@
+.Task {
+    display: flex;
+    justify-content: space-between;
+}
+
+.Task .task-icons-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.task-icons-group input {
+    accent-color: var(--primary-color);
+}

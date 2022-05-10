@@ -1,0 +1,33 @@
+.Tasks {
+    background-color: var(--secondary-color);
+    color: var(--tertiary-color);
+    width: 50%;
+    margin: 5% 25%;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+
+.Tasks .tasks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.Tasks .tasks-header span {
+    font-size: 1.5rem;
+    height: 1.5rem;
+    width: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
+    border-radius: 100%;
+}
+
+.Tasks .tasks-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
