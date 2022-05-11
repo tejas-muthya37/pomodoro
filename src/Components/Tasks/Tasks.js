@@ -1,6 +1,6 @@
 import "./tasks.css";
 import Task from "./../Task/Task";
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Modal } from "@mui/material";
 import { useState } from "react";
 
 const Tasks = () => {
