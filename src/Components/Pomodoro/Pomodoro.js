@@ -59,7 +59,20 @@ const Pomodoro = () => {
 
   return (
     <div className="Pomodoro">
-      <h3 className="pomodoro-title">Pomodoro</h3>
+      <div className="timer">
+        {state.displayBreakMessage && (
+          <div>
+            <h3>Break time! Next session starts in: </h3>
+          </div>
+        )}
+        <p className="pomodoro-clock">
+          {timerMinutes}
+          <span>m</span>
+          <span>:</span>
+          {timerSeconds}
+          <span>s</span>
+        </p>
+      </div>
       <div className="pomodoro-button-group">
         <button
           onClick={() => {
@@ -81,16 +94,6 @@ const Pomodoro = () => {
         >
           Reset
         </button>
-      </div>
-      <div className="timer">
-        {state.displayBreakMessage && (
-          <div>
-            <h3>Break time! Next session starts in: </h3>
-          </div>
-        )}
-        <span>
-          {timerMinutes}:{timerSeconds}
-        </span>
       </div>
     </div>
   );

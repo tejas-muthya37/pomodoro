@@ -14,6 +14,7 @@ const Tasks = () => {
     p: 3,
     bgcolor: "whitesmoke",
     borderRadius: "0.25rem",
+    outline: "none",
   };
 
   const [open, setOpen] = useState(false);
