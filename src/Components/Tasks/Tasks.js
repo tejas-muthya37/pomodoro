@@ -34,27 +34,38 @@ const Tasks = () => {
     taskDescription: "",
   });
 
-  const [editingTask, setEditingTask] = useState(false);
+  const [editingTaskIndex, setEditingTaskIndex] = useState(-1);
 
   const addTask = () => {
-    setTasksArray([
-      ...tasksArray,
-      {
-        _id: uuid(),
-        ...taskDetails,
-      },
-    ]);
+    if (editingTaskIndex !== -1) {
+      setTasksArray([
+        ...tasksArray.slice(0, editingTaskIndex),
+        {
+          _id: uuid(),
+          ...taskDetails,
+        },
+        ...tasksArray.slice(editingTaskIndex + 1),
+      ]);
+    } else {
+      setTasksArray([
+        ...tasksArray,
+        {
+          _id: uuid(),
+          ...taskDetails,
+        },
+      ]);
+    }
     handleClose();
   };
 
-  const editTask = (id) => {
-    setEditingTask(true);
+  const editTask = (id, index) => {
     var taskFound = tasksArray.find((task) => task._id === id);
     setTaskDetails({
       taskName: taskFound.taskName,
       taskDescription: taskFound.taskDescription,
     });
     handleOpen();
+    setEditingTaskIndex(index);
   };
 
   return (
@@ -64,11 +75,11 @@ const Tasks = () => {
         <span onClick={handleOpen}> + </span>
       </header>
       <div className="tasks-body">
-        {tasksArray.map((task) => {
+        {tasksArray.map((task, index) => {
           return (
             <Task
               key={task._id}
-              editTask={() => editTask(task._id)}
+              editTask={() => editTask(task._id, index)}
               taskName={task.taskName}
               taskId={task._id}
             />
