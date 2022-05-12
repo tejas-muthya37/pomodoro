@@ -8,6 +8,53 @@ import uuid from "react-uuid";
 const Tasks = () => {
   const { tasksArray, setTasksArray } = useTask();
 
+  const date = new Date();
+  const dateFormatted = {
+    date: date.getDate(),
+    month: date.getMonth() + 1,
+    year: date.getFullYear(),
+  };
+  switch (dateFormatted.month) {
+    case 1:
+      dateFormatted.month = "January";
+      break;
+    case 2:
+      dateFormatted.month = "February";
+      break;
+    case 3:
+      dateFormatted.month = "March";
+      break;
+    case 4:
+      dateFormatted.month = "April";
+      break;
+    case 5:
+      dateFormatted.month = "May";
+      break;
+    case 6:
+      dateFormatted.month = "June";
+      break;
+    case 7:
+      dateFormatted.month = "July";
+      break;
+    case 8:
+      dateFormatted.month = "August";
+      break;
+    case 9:
+      dateFormatted.month = "September";
+      break;
+    case 10:
+      dateFormatted.month = "October";
+      break;
+    case 11:
+      dateFormatted.month = "November";
+      break;
+    case 12:
+      dateFormatted.month = "December";
+      break;
+    default:
+      dateFormatted.month = "January";
+  }
+
   useEffect(() => {
     localStorage.setItem("TASKS_ARRAY", JSON.stringify(tasksArray));
   }, [tasksArray]);
@@ -51,11 +98,17 @@ const Tasks = () => {
         ...tasksArray,
         {
           _id: uuid(),
+          dateCreated: `${dateFormatted.month} ${dateFormatted.date}, ${dateFormatted.year}`,
           ...taskDetails,
         },
       ]);
     }
     handleClose();
+    setTaskDetails({
+      taskName: "",
+      taskDescription: "",
+    });
+    setEditingTaskIndex(-1);
   };
 
   const editTask = (id, index) => {
@@ -128,6 +181,7 @@ const Tasks = () => {
                     taskName: "",
                     taskDescription: "",
                   });
+                  setEditingTaskIndex(-1);
                 }}
               >
                 Cancel
