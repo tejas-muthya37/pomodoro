@@ -6,6 +6,7 @@ const Pomodoro = () => {
   const { state, dispatch } = usePomodoro();
   const timerMinutes = state.minutes < 10 ? `0${state.minutes}` : state.minutes;
   const timerSeconds = state.seconds < 10 ? `0${state.seconds}` : state.seconds;
+  window.document.title = `${timerMinutes}:${timerSeconds} | Pomodoro`;
 
   useEffect(
     state.pomodoroRunning
@@ -42,7 +43,7 @@ const Pomodoro = () => {
             } else {
               dispatch({ type: "SET_SECONDS", payload: state.seconds - 1 });
             }
-          }, 10);
+          }, 1000);
         }
       : state.resetFlag
       ? () => {
