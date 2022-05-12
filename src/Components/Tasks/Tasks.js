@@ -1,9 +1,17 @@
 import "./tasks.css";
 import Task from "./../Task/Task";
 import { Box, Modal } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useTask } from "./../../Context/task-context";
+import uuid from "react-uuid";
 
 const Tasks = () => {
+  const { tasksArray, setTasksArray } = useTask();
+
+  useEffect(() => {
+    localStorage.setItem("TASKS_ARRAY", JSON.stringify(tasksArray));
+  }, [tasksArray]);
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -26,6 +34,29 @@ const Tasks = () => {
     taskDescription: "",
   });
 
+  const [editingTask, setEditingTask] = useState(false);
+
+  const addTask = () => {
+    setTasksArray([
+      ...tasksArray,
+      {
+        _id: uuid(),
+        ...taskDetails,
+      },
+    ]);
+    handleClose();
+  };
+
+  const editTask = (id) => {
+    setEditingTask(true);
+    var taskFound = tasksArray.find((task) => task._id === id);
+    setTaskDetails({
+      taskName: taskFound.taskName,
+      taskDescription: taskFound.taskDescription,
+    });
+    handleOpen();
+  };
+
   return (
     <div className="Tasks">
       <header className="tasks-header">
@@ -33,10 +64,16 @@ const Tasks = () => {
         <span onClick={handleOpen}> + </span>
       </header>
       <div className="tasks-body">
-        <Task />
-        <Task />
-        <Task />
-        <Task />
+        {tasksArray.map((task) => {
+          return (
+            <Task
+              key={task._id}
+              editTask={() => editTask(task._id)}
+              taskName={task.taskName}
+              taskId={task._id}
+            />
+          );
+        })}
       </div>
       <Modal
         open={open}
@@ -68,8 +105,18 @@ const Tasks = () => {
               placeholder="Description"
             />
             <div className="btn-group">
-              <button>Cancel</button>
-              <button>Save</button>
+              <button
+                onClick={() => {
+                  handleClose();
+                  setTaskDetails({
+                    taskName: "",
+                    taskDescription: "",
+                  });
+                }}
+              >
+                Cancel
+              </button>
+              <button onClick={addTask}>Save</button>
             </div>
           </form>
         </Box>
