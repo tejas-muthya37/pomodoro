@@ -5,7 +5,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import UndoIcon from "@mui/icons-material/Undo";
 import { useState } from "react";
 
-const Task = ({ taskName, editTask, taskId }) => {
+const Task = ({ taskName, editTask, deleteTask, taskId }) => {
   const [taskComplete, setTaskComplete] = useState(false);
   return (
     <div className="Task">
@@ -23,7 +23,10 @@ const Task = ({ taskName, editTask, taskId }) => {
           />
         )}
         <EditOutlinedIcon onClick={() => editTask(taskId)} fontSize="small" />
-        <DeleteOutlinedIcon fontSize="small" />
+        <DeleteOutlinedIcon
+          onClick={() => deleteTask(taskId)}
+          fontSize="small"
+        />
       </div>
     </div>
   );

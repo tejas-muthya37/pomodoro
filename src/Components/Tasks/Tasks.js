@@ -68,6 +68,10 @@ const Tasks = () => {
     setEditingTaskIndex(index);
   };
 
+  const deleteTask = (id) => {
+    setTasksArray(tasksArray.filter((task) => task._id !== id));
+  };
+
   return (
     <div className="Tasks">
       <header className="tasks-header">
@@ -79,9 +83,10 @@ const Tasks = () => {
           return (
             <Task
               key={task._id}
-              editTask={() => editTask(task._id, index)}
-              taskName={task.taskName}
               taskId={task._id}
+              taskName={task.taskName}
+              editTask={() => editTask(task._id, index)}
+              deleteTask={() => deleteTask(task._id)}
             />
           );
         })}
