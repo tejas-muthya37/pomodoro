@@ -6,6 +6,15 @@ import { useTask } from "./../../Context/task-context";
 import uuid from "react-uuid";
 
 const Tasks = () => {
+  useEffect(() => {
+    fetch("https://627d3749e5ac2c452aff4e15.mockapi.io/api/pomodoro/tasks", {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }, []);
+
   const { tasksArray, setTasksArray } = useTask();
 
   const date = new Date();
@@ -93,6 +102,19 @@ const Tasks = () => {
         },
         ...tasksArray.slice(editingTaskIndex + 1),
       ]);
+      fetch(
+        `https://627d3749e5ac2c452aff4e15.mockapi.io/api/pomodoro/tasks/${
+          editingTaskIndex + 1
+        }`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(taskDetails),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err));
     } else {
       setTasksArray([
         ...tasksArray,
@@ -109,6 +131,14 @@ const Tasks = () => {
       taskDescription: "",
     });
     setEditingTaskIndex(-1);
+    fetch("https://627d3749e5ac2c452aff4e15.mockapi.io/api/pomodoro/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(taskDetails),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   };
 
   const editTask = (id, index) => {
@@ -121,8 +151,20 @@ const Tasks = () => {
     setEditingTaskIndex(index);
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = (id, index) => {
     setTasksArray(tasksArray.filter((task) => task._id !== id));
+    fetch(
+      `https://627d3749e5ac2c452aff4e15.mockapi.io/api/pomodoro/tasks/${
+        index + 1
+      }`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -139,7 +181,7 @@ const Tasks = () => {
               taskId={task._id}
               taskName={task.taskName}
               editTask={() => editTask(task._id, index)}
-              deleteTask={() => deleteTask(task._id)}
+              deleteTask={() => deleteTask(task._id, index)}
             />
           );
         })}
