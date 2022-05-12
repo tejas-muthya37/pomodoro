@@ -42,7 +42,7 @@ const Pomodoro = () => {
             } else {
               dispatch({ type: "SET_SECONDS", payload: state.seconds - 1 });
             }
-          }, 1000);
+          }, 10);
         }
       : state.resetFlag
       ? () => {
@@ -62,7 +62,12 @@ const Pomodoro = () => {
       <div className="timer">
         {state.displayBreakMessage && (
           <div>
-            <h3>Break time! Next session starts in: </h3>
+            <h3>
+              Break time!
+              <br />
+              <br />
+              Next session starts in:{" "}
+            </h3>
           </div>
         )}
         <p className="pomodoro-clock">
